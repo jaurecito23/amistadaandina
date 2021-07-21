@@ -5,19 +5,19 @@ function conectarDB(){
 
     $db = mysqli_connect("localhost","root","root","juego");
 
-if(!$db){
+    if(!$db){
 
-    echo "No se pudo Conectar";
+        echo "No se pudo Conectar";
 
-}else{
+    }else{
 
 
-    return $db;
+        return $db;
+
+    }
+
 
 }
-
-
-  }
 
 
 ?>

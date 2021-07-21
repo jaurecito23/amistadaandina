@@ -1,17 +1,10 @@
 <?php
 
-include "funciones/debuguear.php";
-include "funciones/database.php";
-
-session_start();
-
-$id = intval($_SESSION["id"]);
-$id = filter_var($id,FILTER_VALIDATE_INT);
+require "include/app.php";
 
 
 
-
-include "header.php";
+incluírTemplate("header");
 ?>
 
 <main class='main'>

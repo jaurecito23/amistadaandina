@@ -1,13 +1,13 @@
 <?php
 
-include "funciones/debuguear.php";
-include "funciones/database.php";
-
+require "include/app.php";
 $db = conectarDB();
 
-session_start();
-$id = intval($_SESSION["id"]);
-$id = filter_var($id,FILTER_VALIDATE_INT);
+
+
+
+$id = obtenerId();
+
 $errores = [];
 $apodos = [];
 $query= "SELECT * FROM apodos;";
@@ -109,17 +109,12 @@ foreach($resultado as $apodo){
     }
 
 
-include "header.php";
+incluírTemplate("header");
 ?>
 
-<?php foreach($errores as $error):?>
-<div class="alerta">
 
-    <p> <?php echo $error; ?> </p>
+<?php obtenerErrores($errores); ?>
 
-</div>
-
-<?php endforeach; ?>
 <main class='main'>
     <div class="contenido__main">
 

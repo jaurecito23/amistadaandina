@@ -1,13 +1,12 @@
 <?php
 
-    include "funciones/database.php";
-    include "funciones/debuguear.php";
+    require "include/app.php";
+
+
 
     $db = conectarDB();
 
-    session_start();
-
-$id = $_SESSION["id"];
+   $id = obtenerId();
 
 $query = "SELECT * FROM users WHERE id = '${id}'";
 $resultado = mysqli_query($db,$query);
@@ -19,7 +18,16 @@ foreach ($resultado as $user) {
     $imagen = $user["imagen"];
 }
 
-include "header2.php";
+$date =  obtenerHora();
+
+    if($date > 20 || $date < 8){
+
+        header("Location: index.php");
+
+    }
+
+
+include "include/templates/header2.php";
 
 ?>
 
@@ -41,8 +49,7 @@ include "header2.php";
         </div>
 </main>
 
-        <?php include "footer.php"?>
+<?php include "footer.php"?>
 
 </body>
 </html>
-

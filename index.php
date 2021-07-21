@@ -1,7 +1,7 @@
 <?php
 
-include "funciones/debuguear.php";
-include "funciones/database.php";
+require "include/app.php";
+
 
 $db = conectarDB();
 $nombre = "";
@@ -15,36 +15,11 @@ $registrado = false;
 
 
 
-$date=date("H");
+$date = date("H");
 $date = intval($date);
 
 
-
-
-
-session_start();
-if(isset($_SESSION["loginBDM"])){
-
-    if($_SESSION["loginBDM"] === true){
-
-        if($date > 20 || $date < 8){
-
-            header("Location: coincidencias.php");
-
-          }elseif($_SESSION["registrado"] === true ){
-
-
-            header("Location: cuestionario.php");
-
-        }else{
-
-            header("Location: intro3.php");
-
-        }
-
-    }
-
-}
+verificarSesion();
 
 
 
@@ -59,20 +34,10 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 
 //Obtener el usuario
         if($resultado){
-
             if($resultado -> num_rows === 0){
-
-
                     $errores[] = "El legajo es Incorrecto";
-
-
-
-
                 }else{
-
-
                         // Iniciar una session en el server
-
                         foreach ($resultado as $usuario) {
                             $nombre = $usuario["nombre"];
                             $id = $usuario["id"];
@@ -83,6 +48,7 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
 
                         $_SESSION["id"] = $id;
                         $_SESSION["loginBDM"] = true;
+                        $_SESSION["registrado"] = $registrado;
 
                         if($date > 20 || $date < 8){
 
@@ -93,36 +59,23 @@ if($_SERVER["REQUEST_METHOD"]==="POST"){
                               header("Location: cuestionario.php");
 
                           }
-
-
                         $post = true;
            }
 
         }else{
-
             $errores[] = "Hubo un error al buscar tu usuario";
             $errores[] = "Vuelve a intentarlo o comunicate con el administrador";
-
         }
     }
 // }
-
-
-include "headerlogin.php";
+incluírTemplate("headerlogin");
 ?>
 
 
 
 <main class='main'>
 
-    <?php foreach($errores as $error):?>
-    <div class="alerta">
-
-        <p> <?php echo $error; ?> </p>
-
-    </div>
-
-    <?php endforeach; ?>
+    <?php obtenerErrores($errores); ?>
 
     <div class='contenido__main'>
 

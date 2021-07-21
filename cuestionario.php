@@ -1,39 +1,21 @@
 <?php
 
-    require "funciones/database.php";
-    require "funciones/debuguear.php";
+
+require "include/app.php";
+
+
+
 
    $db = conectarDB();
 
-   session_start();
-    $id = $_SESSION["id"];
 
-
+  $id = obtenerId();
 
 
     $preguntas = [];
     $numPreg = 1;
-    $day = date("l");
-    $dia = "";
     $cantDePreg = 0;
-    $dias = [
-        "Monday" =>"Lunes",
-        "Tuesday" =>"Martes",
-        "Wednesday" =>"Miercoles",
-        "Thursday"=>"Jueves",
-        "Friday"=>"Viernes",
-        "Saturday"=>"Sabado",
-        "Sunday"=>"Domingo"
-    ];
-    foreach ($dias as $key => $value) {
-
-        if($key == $day){
-
-            $dia = $value;
-
-        }
-
-    }
+    $dia = obtenerDia();
 
 
 
@@ -61,7 +43,8 @@
 
         header("Location: findia.php");
 
-    }
+    }else{
+
 
 
     // Traer Preguntas
@@ -72,10 +55,11 @@
 
 
     if($resultado){
-    foreach ($resultado as $pregunta) {
+        foreach ($resultado as $pregunta) {
 
-        $preguntas[] = $pregunta["pregunta"];
-        $cantDePreg += 1;
+            $preguntas[] = $pregunta["pregunta"];
+            $cantDePreg += 1;
+        }
     }
 
 
@@ -137,7 +121,7 @@ $opciones = [];
 
 
 
-include "header2.php";
+include "include/templates/header2.php";
 ?>
 
 <main class="main">
@@ -154,18 +138,18 @@ include "header2.php";
                     <div class="form__respuesta">
 
                         <div class="pregunta-proceso">
-                        <label class="proceso"><?php echo $numPreg?>/<?php echo $cantDePreg?></label>
+                            <label class="proceso"><?php echo $numPreg?>/<?php echo $cantDePreg?></label>
 
-                        <h2 class="titulo"> <?php echo $pregunta; ?></h2>
-                       </div>
+                            <h2 class="titulo"> <?php echo $pregunta; ?></h2>
+                        </div>
                         <div class="inputs__respuestas">
                             <div class="input-respuesta">
                                 <input id="<?php echo $numPreg?>A" class="respuesta" value="A" name="respuestas[<?php echo $numPreg ?>]" type="radio">
-                                 <label for="<?php echo $numPreg?>A" class="texto"> <?php  $numP = $numPreg - 1; echo $opciones[$numP][0] ?> </label>
-                           </div>
+                                <label for="<?php echo $numPreg?>A" class="texto"> <?php  $numP = $numPreg - 1; echo $opciones[$numP][0] ?> </label>
+                            </div>
 
                             <div class="input-respuesta">
-                                <input  id="<?php echo $numPreg?>B" class="respuesta" value="B" name="respuestas[<?php echo $numPreg ?>]" type="radio">
+                                <input id="<?php echo $numPreg?>B" class="respuesta" value="B" name="respuestas[<?php echo $numPreg ?>]" type="radio">
                                 <label for="<?php echo $numPreg?>B" class="texto"> <?php  $num = $numPreg - 1; echo $opciones[$numP][1] ?> </label>
                             </div>
                         </div>

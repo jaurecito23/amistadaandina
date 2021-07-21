@@ -1,26 +1,38 @@
 <?php
 
+require "include/app.php";
 
-include "header.php";
+$id = obtenerId();
+
+$date = obtenerHora();
+
+if($date < 21 && $date > 8){
+
+    header("Location: index.php");
+
+}
+
+
+incluírTemplate("header");
 
 ?>
 
-    <main class="main">
-        <div class="contenido__main">
+<main class="main">
+    <div class="contenido__main">
 
-            <p class="intro">
+        <p class="intro">
 
-                Lamentamos no hayas podido participar.
+            Lamentamos no hayas podido participar.
 
-            </p>
+        </p>
 
-            <p class="texto">
+        <p class="texto">
 
-                Las preguntas estaran disponibles mañana a las 8:00 hs.
+            Las preguntas estaran disponibles mañana a las 8:00 hs.
 
-            </p>
-        </div>
-    </main>
+        </p>
+    </div>
+</main>
 </body>
 
 </html>

@@ -1,37 +1,23 @@
 <?php
 
-include "funciones/database.php";
-include "funciones/debuguear.php";
+    require "include/app.php";
+
+
+$date = obtenerHora();
+
+
+if($date < 21 && $date > 8){
+
+    header("Location: index.php");
+
+}
+
 
 $db = conectarDB();
 
-session_start();
+$id = obtenerId();
 
-$id= $_SESSION ["id"];
-$id=intval($id);
-
-$day = date("l");
-    $dia = "";
-
-    $dias = [
-        "Monday" =>"Lunes",
-        "Tuesday" =>"Martes",
-        "Wednesday" =>"Miercoles",
-        "Thursday"=>"Jueves",
-        "Friday"=>"Viernes",
-        "Saturday"=>"Sabado",
-        "Sunday"=>"Domingo"
-    ];
-
-    foreach ($dias as $key => $value) {
-
-        if($key == $day){
-
-            $dia = $value;
-
-        }
-
-    }
+$dia = obtenerDia();
 
 $query = "SELECT * FROM users WHERE id='${id}'";
 $resultado = mysqli_query($db,$query);
@@ -84,7 +70,7 @@ foreach ($resultado as $group) {
 
 
 $cantidad -= 1;
-include "header3.php";
+include "include/templates/header3.php";
 
 ?>
 
